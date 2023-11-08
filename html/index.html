@@ -4,22 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Website</title>
+    <title>Voting Dashboard</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
   </head>
-  <body>
-    <main>
-        <h1>Welcome to My Website</h1>  
-    </main>
-	<div id = "potentialBallots">
-		<h2>Candidates</h2>
-	</div>
-	<div id="controls">
-		<button onclick="addVoter">[ Add a new voter ] </button>
-	</div>
-	<div id="completedBallots">
-	</div>
-	<script src="index.js"></script>
+ 
+  <body onload="initPage()">
+    <h1 id="heading">Title </h1>
+    <div id="messages"></div>
+    <h2>Candidates</h2>
+    <div id="candidateList" class="displayArea"></div>
+
+    <h2>Incomplete Ballots</h2>
+    <div id ="incompleteBallots" class="displayArea"></div>
+    <div id="controls">
+        <button id="addBtn">[ Register a Voter ]</button>
+        <button id="showResults">[ Show Results ]</button>
+    </div>
+
+    <h2>Complete Ballots</h2>
+    <div id="completeBallots" class="displayArea"></div>
+
+    <div id="myModal" class="modal">
+      <form method="post" name="addUserForm">
+        <div class="modal-content">
+          <span class="close">x</span>
+          <p><input type="text" name="userName"></p>
+          <p><button id="submitBtn" onclick="return createVoterRecord()">[ submit ]</button></p>
+        </div>
+      </form>
+    </div>
   </body>
 </html>
+<script src="control.js"></script>
