@@ -14,12 +14,11 @@ const hostname = "127.0.0.1";
 const port = "3001";
 const server = http.createServer();
 
-//For holding the candidates to return!
-let returnCandidates = [];
-
 server.on('request', async (request,response) => {
 	//check path to determine what function to run
 	let q = url.parse(request.url, true);
+	//For holding the candidates to return!
+	let returnCandidates = [];
 	switch(q.pathname){
 		case "/candidate":
 			returnCandidates = await getCandidates();
@@ -59,10 +58,12 @@ async function getCandidatesWithBallots(){
 		let thisCandidate = await cursor.next();
 		const query = { "ballot.candidate":thisCandidate.name };
 		const matchingVotes = await ballots.countDocuments(query);
-		values.push({"candidate":thisCandidate.name, "ballots":matchingVotes});
+		//values.push({"candidate":thisCandidate.name, "ballots":matchingVotes});
+		values.push({"_id":thisCandidate._id, "name":thisCandidate.name+' '+matchingVotes, "ballots": matchingVotes});
 	}
-	const query = {"ballot":null};
-	const matchingVotes = await ballots.countDocuments(query);
-	values.push({"candidate":"not voted", "ballots":matchingVotes});
+	const nullQuery = {"ballot":null};
+	const matchingVotes = await ballots.countDocuments(nullQuery);
+	values.push({"_id":0, "name":"not voted", "ballots":matchingVotes})
+	//values.push({"candidate":"not voted", "ballots":matchingVotes});
 	return values;
 }
