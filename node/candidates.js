@@ -4,6 +4,7 @@ const http = require('http');
 const url = require('url');
 
 const { MongoClient } = require('mongodb');
+const { match } = require('assert');
 
 const mongoURI = "mongodb://localhost:27017";
 //to getURI goto mongoSH db.getMongo()
@@ -62,6 +63,9 @@ async function getCandidatesWithBallots(){
 	}
 	const nullQuery = {"ballot":null};
 	const matchingVotes = await ballots.countDocuments(nullQuery);
-	values.push({"_id":0, "name":"not voted", "ballots":matchingVotes})
+	console.log(matchingVotes);
+	console.log(Number(matchingVotes));
+	console.log(matchingVotes==="");
+	values.push({"_id":0, "name":"not voted"+' '+matchingVotes, "ballots": matchingVotes});
 	return values;
 }
