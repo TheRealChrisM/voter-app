@@ -97,8 +97,17 @@ function loadContent(view){
 	for (area of applicationWindow){
 		area.innerHTML="";
 	}
+	var incompleteBallotHeader = document.getElementById('incompleteBallotsHeader');
+	var completeBallotHeader = document.getElementById('completeBallotsHeader');
+	var controls = document.getElementById('controls');
+	incompleteBallotHeader.style.display = "none";
+	completeBallotHeader.style.display = "none";
+	controls.style.display = "none";
 	switch(view){
 		case viewType["home"]: {
+			incompleteBallotHeader.style.display = "block";
+			completeBallotHeader.style.display = "block";
+			controls.style.display = "block";
 			fetchAndListCandidates(false);
 			fetchAndDisplayRegisteredVoters();
 			break;
@@ -109,6 +118,12 @@ function loadContent(view){
 		}
 		case viewType["results"]: {
 			fetchAndListCandidates(true);
+			controls.style.display = "block";
+			document.getElementById("showResults").innerHTML = "[ Back ]"
+			document.getElementById("showResults").onclick = function() {
+				initPage();
+				document.getElementById("showResults").innerHTML = "[ Show Results ]"
+			}
 		}
 	}
 }
@@ -116,13 +131,13 @@ function loadContent(view){
 //This is an onclick function which when a button is pressed will handle the logic of taking in the name provided and registering the voter.
 function createVoterRecord() {
 	//Grabs the name from the registration modal.
-	let voterName = document.getElementById('userName').value;
+	let voterName = document.addUserForm.userName.value;
 	//Create new voter record in database.
 	registerVoter(voterName);
 	//Close the modal.
-	closeSpan.onclick();
+	closeModalSpan.onclick();
 	//Reload the data and redraw the page so that the new voter registration is included.
-	fetchAndDisplayRegisteredVoters();
+	//fetchAndDisplayRegisteredVoters();
 	return false;
 }
 
@@ -140,8 +155,8 @@ async function registerVoter(voter){
 	})
 	.then(response=>response.json())
 	.then((result)=> {
-		statusMessage(result);
 		fetchAndDisplayRegisteredVoters();
+		statusMessage("Voter registered!");
 	})
 	.catch(error=>console.log("error saving voter"));
 	//TODO actually write the error to the page.
@@ -161,7 +176,7 @@ function deleteVoter(name){
 	})
 	.then(results=>results.json())
 	.then((result)=>{
-		statusMessage(result);
+		statusMessage("Voter removed.");
 		loadContent(viewType["home"]);
 	})
 }
@@ -177,13 +192,13 @@ function processVote(){
 	})
 	.then(res=>res.json())
 	.then((result)=> {
-		statusMessage(result);
+		statusMessage("Vote submitted!");
 		voterPackage = {};
 		loadContent(viewType["home"]);
 	})
 	.catch(error=>{
 		console.error(error);
-		statusMessage(error);
+		statusMessage("Error submitting vote.");
 	})
 }
 
@@ -198,6 +213,9 @@ function makeAList (target, data, idField, onClickFunction, includeDeleteVoterLi
 	const element = document.getElementById(target);
 	//Clear current storage in target's list.
 	element.innerHTML = "";
+	if (data.length === 0){
+		element.innerHTML = "---- EMPTY ----"
+	}
 	let list = document.createElement('ul');
 	for (let i=0; i<data.length; i++){
 		let li = document.createElement('li');
@@ -223,5 +241,6 @@ function makeAList (target, data, idField, onClickFunction, includeDeleteVoterLi
 }
 
 function statusMessage(message) {
+	console.log(message)
 	document.getElementById("messages").innerHTML=message;
 }

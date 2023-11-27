@@ -57,7 +57,7 @@ async function getCandidatesWithBallots(){
 	const cursor = candidates.find({}).sort({name:1});
 	while (await cursor.hasNext()){
 		let thisCandidate = await cursor.next();
-		const query = { "ballot.candidate":thisCandidate.name };
+		const query = { "ballot.name":thisCandidate.name };
 		const matchingVotes = await ballots.countDocuments(query);
 		values.push({"_id":thisCandidate._id, "name":thisCandidate.name+' '+matchingVotes, "ballots": matchingVotes});
 	}

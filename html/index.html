@@ -11,18 +11,19 @@
   <body onload="initPage()">
     <h1 id="heading">Title </h1>
     <div id="messages"></div>
-    <h2>Candidates</h2>
+    <h2 id="candidatesHeader">Candidates</h2>
     <div id="candidateList" class="displayArea"></div>
 
-    <h2>Incomplete Ballots</h2>
+    <h2 id="incompleteBallotsHeader">Incomplete Ballots</h2>
     <div id ="incompleteBallots" class="displayArea"></div>
-    <div id="controls">
-        <button id="addBtn">[ Register a Voter ]</button>
-        <button id="showResults">[ Show Results ]</button>
-    </div>
 
-    <h2>Complete Ballots</h2>
+    <h2 id="completeBallotsHeader">Complete Ballots</h2>
     <div id="completeBallots" class="displayArea"></div>
+
+    <div id="controls">
+      <button id="addBtn">[ Register a Voter ]</button>
+      <button id="showResults">[ Show Results ]</button>
+    </div>
 
     <div id="myModal" class="modal">
       <form method="post" name="addUserForm">
