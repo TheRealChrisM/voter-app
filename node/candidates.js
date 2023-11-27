@@ -63,9 +63,6 @@ async function getCandidatesWithBallots(){
 	}
 	const nullQuery = {"ballot":null};
 	const matchingVotes = await ballots.countDocuments(nullQuery);
-	console.log(matchingVotes);
-	console.log(Number(matchingVotes));
-	console.log(matchingVotes==="");
 	values.push({"_id":0, "name":"not voted"+' '+matchingVotes, "ballots": matchingVotes});
 	return values;
 }
