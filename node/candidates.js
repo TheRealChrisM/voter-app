@@ -58,12 +58,10 @@ async function getCandidatesWithBallots(){
 		let thisCandidate = await cursor.next();
 		const query = { "ballot.candidate":thisCandidate.name };
 		const matchingVotes = await ballots.countDocuments(query);
-		//values.push({"candidate":thisCandidate.name, "ballots":matchingVotes});
 		values.push({"_id":thisCandidate._id, "name":thisCandidate.name+' '+matchingVotes, "ballots": matchingVotes});
 	}
 	const nullQuery = {"ballot":null};
 	const matchingVotes = await ballots.countDocuments(nullQuery);
 	values.push({"_id":0, "name":"not voted", "ballots":matchingVotes})
-	//values.push({"candidate":"not voted", "ballots":matchingVotes});
 	return values;
 }
