@@ -20,10 +20,10 @@ server.on('request', async (request,response) => {
 	//For holding the candidates to return!
 	let returnCandidates = [];
 	switch(q.pathname){
-		case "/candidate":
+		case "/candidates":
 			returnCandidates = await getCandidates();
 			break;
-		case "/candidate/ballots":
+		case "/candidates/ballots":
 			returnCandidates = await getCandidatesWithBallots();
 			break;
 	}
@@ -37,7 +37,6 @@ server.on('error', error=>console.error(error.stack));
 server.listen(port, hostname, () => console.log(`server running at http://${hostname}:${port}`));
 
 async function getCandidates(){
-	print("hi")
 	let values = [];
 	const database = client.db('voting');
 	const candidates = database.collection('candidates');

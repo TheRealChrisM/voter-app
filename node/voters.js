@@ -11,7 +11,7 @@ let port = 3002;
 app.use(express.json());
 
 app.listen(port, ()=> console.log(`listening on port ${port}`));
-//CRED FUNCTIONALITY
+//CRUD FUNCTIONALITY
 
 //CREATE
 app.post('/', async (request, response)=> {
