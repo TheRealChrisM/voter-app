@@ -138,6 +138,11 @@ async function registerVoter(voter){
 		},
 		body: JSON.stringify(data)
 	})
+	.then(response=>response.json())
+	.then((result)=> {
+		statusMessage(result);
+		fetchAndDisplayRegisteredVoters();
+	})
 	.catch(error=>console.log("error saving voter"));
 	//TODO actually write the error to the page.
 }
