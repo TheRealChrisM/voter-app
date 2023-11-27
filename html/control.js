@@ -1,8 +1,8 @@
 //This handles all of the Javascript for the Front-End aspect of the voting app.
 const apiURIMapping = {};
-apiURIMapping['candidates']='http://localhost/api/candidates';
-apiURIMapping['candidatesWithBallots']='http://localhost/api/candidates/ballots';
-apiURIMapping['voters']='http://localhost/api/voters'
+apiURIMapping['candidates']='https://kasm.io/api/candidates';
+apiURIMapping['candidatesWithBallots']='https://kasm.io/api/candidates/ballots';
+apiURIMapping['voters']='https://kasm.io/api/voters'
 
 //A mapping with global access that stores ballot information
 let voterPackage = {};
@@ -22,7 +22,7 @@ function initPage(){
 	//Setup Modal Window
 	var modal = document.getElementById("myModal");
 	var modalBtn = document.getElementById("addBtn");
-	var closeModalSpan = document.getElementById("close")[0];
+	var closeModalSpan = document.getElementsByClassName("close")[0];
 	modalBtn.onclick=function() {
 		modal.style.display = "block";
 	}
@@ -58,7 +58,7 @@ function fetchAndListCandidates(showVotes){
 		apiTarget = "candidatesWithBallots";
 	}
 	//Query API to get a list of all candidates and create a list of them.
-	let candidateOptions = fetch(apiURIMapping[target]);
+	let candidateOptions = fetch(apiURIMapping[apiTarget]);
 	candidateOptions.then((result)=>result.json())
 	.then((result)=> {
 		makeAList('candidateList', result, "name");
